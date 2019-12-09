@@ -49,7 +49,9 @@ func main() {
 	// create a new fifochan at /tmp/test
 	// (assumes existence of /tmp)
 	ch = fifochan.New("/tmp/test")
-	// ensure that channels are closed
+
+	// begin background streaming of data
+	fifochan.Start()
 	defer fifochan.Stop()
 
 	// start the write goroutine
@@ -64,4 +66,10 @@ func main() {
 	signal.Notify(c, os.Interrupt)
 	<-c
 }
+```
+
+## Benchmarks
+```
+BenchmarkChan-4         275101270              245 ns/op
+BenchmarkFIFOChan-4     195536666              372 ns/op
 ```
