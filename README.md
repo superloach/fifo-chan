@@ -1,5 +1,5 @@
 # fifochan
-Use Linux FIFO nodes as Go channels.
+Use Linux (Unix?) FIFO nodes as Go channels.
 
 ## Example
 ```go
