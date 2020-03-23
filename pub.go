@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func makePublisher(ch *FIFOChan, path string) error {
+func makePublisher(ch FIFOChan, path string) error {
 	var n node
 
 	n, err := newNode(path)
@@ -19,7 +19,7 @@ func makePublisher(ch *FIFOChan, path string) error {
 		for {
 			select {
 			case <-stopPubChan:
-				if len(*ch) != 0 {
+				if len(ch) != 0 {
 					continue
 				}
 
@@ -34,7 +34,7 @@ func makePublisher(ch *FIFOChan, path string) error {
 				}
 
 				return
-			case obj := <-*ch:
+			case obj := <-ch:
 				data, err := json.Marshal(obj)
 				data = append(data, '\n')
 				if err != nil {

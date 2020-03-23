@@ -11,12 +11,12 @@ func Start() {
 	stopSubChan = make(chan struct{})
 
 	for path, ch := range chans {
-		err = makePublisher(&ch, path)
+		err = makePublisher(ch, path)
 		if err != nil {
 			Err <- err
 		}
 
-		err = makeSubscriber(&ch, path)
+		err = makeSubscriber(ch, path)
 		if err != nil {
 			Err <- err
 		}

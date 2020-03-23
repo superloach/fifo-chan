@@ -13,6 +13,11 @@ func NewBuf(path string, buf int) FIFOChan {
 		return ch
 	}
 
+	_, err := newNode(path)
+	if err != nil {
+		Err <- err
+	}
+
 	ch = MakeBuf(buf)
 	chans[path] = ch
 

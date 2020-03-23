@@ -4,7 +4,7 @@ import (
 	"sync"
 )
 
-var chans map[string]chan interface{}
+var chans map[string]FIFOChan
 var mutex sync.Mutex
 var wg sync.WaitGroup
 var Err chan error

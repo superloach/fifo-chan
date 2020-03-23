@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func makeSubscriber(ch *FIFOChan, path string) error {
+func makeSubscriber(ch FIFOChan, path string) error {
 	n, err := newNode(path)
 	if err != nil {
 		return err
@@ -20,6 +20,10 @@ func makeSubscriber(ch *FIFOChan, path string) error {
 
 			if !s.Scan() {
 				err = s.Err()
+				if err != nil {
+					Err <- err
+				}
+
 				select {
 				case <-stopSubChan:
 					err := n.Close()
@@ -34,7 +38,6 @@ func makeSubscriber(ch *FIFOChan, path string) error {
 
 					return
 				default:
-					Err <- err
 					continue
 				}
 			}
@@ -45,7 +48,7 @@ func makeSubscriber(ch *FIFOChan, path string) error {
 			if err != nil {
 				Err <- err
 			} else {
-				*ch <- obj
+				ch <- obj
 			}
 		}
 	}()
